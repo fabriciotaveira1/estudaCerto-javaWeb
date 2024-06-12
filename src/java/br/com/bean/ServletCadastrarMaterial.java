@@ -20,6 +20,9 @@ public class ServletCadastrarMaterial extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
         if ("adicionar".equals(action)) {
             adicionarMaterial(request, response);
@@ -128,7 +131,7 @@ public class ServletCadastrarMaterial extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println("<script>");
             out.println("alert('Material de aprendizagem excluído com sucesso');");
-             out.println("history.back();");
+            out.println("history.back();");
             out.println("</script>");
 
         } catch (Exception e) {

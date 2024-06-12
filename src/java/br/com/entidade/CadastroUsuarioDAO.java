@@ -106,7 +106,7 @@ public class CadastroUsuarioDAO extends DAO {
         Usuario usuario = null;
         try {
             abrirBanco();
-            String query = "SELECT id, nome, email, senha FROM usuario WHERE email=?";
+            String query = "SELECT id, nome, email, senha,tentativas_login_incorretas, conta_suspensa   FROM usuario WHERE email=?";
             pst = con.prepareStatement(query);
             pst.setString(1, email);
             ResultSet rs = pst.executeQuery();
@@ -117,6 +117,8 @@ public class CadastroUsuarioDAO extends DAO {
                     usuario.setId(rs.getInt("id"));
                     usuario.setNome(rs.getString("nome"));
                     usuario.setEmail(rs.getString("email"));
+                    usuario.setTentativasLoginIncorretas(rs.getInt("tentativas_login_incorretas"));
+                    usuario.setContaSuspensa(rs.getBoolean("conta_suspensa"));
                 }
             }
             fecharBanco();
@@ -135,11 +137,11 @@ public class CadastroUsuarioDAO extends DAO {
             pst = con.prepareStatement(query);
             pst.setString(1, email);
             pst.executeUpdate();
-            fecharBanco();
         } catch (Exception e) {
             System.out.println("Erro ao incrementar tentativas de login incorretas: " + e.getMessage());
-            fecharBanco();
             throw e;
+        } finally {
+            fecharBanco();
         }
     }
 
@@ -163,18 +165,18 @@ public class CadastroUsuarioDAO extends DAO {
         return tentativas;
     }
 
-    public void suspenderConta(int idUsuario) throws Exception {
+    public void suspenderConta(String email) throws Exception {
         try {
             abrirBanco();
-            String query = "UPDATE usuario SET conta_suspensa = true WHERE id=?";
+            String query = "UPDATE usuario SET conta_suspensa = true WHERE email=?";
             pst = con.prepareStatement(query);
-            pst.setInt(1, idUsuario);
+            pst.setString(1, email);
             pst.executeUpdate();
-            fecharBanco();
         } catch (Exception e) {
             System.out.println("Erro ao suspender conta: " + e.getMessage());
-            fecharBanco();
             throw e;
+        } finally {
+            fecharBanco();
         }
     }
 

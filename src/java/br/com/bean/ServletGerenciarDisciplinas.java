@@ -20,6 +20,10 @@ public class ServletGerenciarDisciplinas extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+
         String action = request.getParameter("action");
 
         if ("adicionar".equals(action)) {
@@ -28,15 +32,17 @@ public class ServletGerenciarDisciplinas extends HttpServlet {
             editarDisciplina(request, response);
         } else if ("excluir".equals(action)) {
             excluirDisciplina(request, response);
+        } else if ("editarNota".equals(action)) {
+            editarNotaDisciplina(request, response);
         } else {
             enviarMensagem(response, "Ação desconhecida!");
         }
+
     }
 
     private void adicionarDisciplina(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             // Obtém os parâmetros do formulário
-
             String nome = request.getParameter("nome");
             int cargaHoraria = Integer.parseInt(request.getParameter("cargaHoraria"));
             String professor = request.getParameter("professor");
@@ -66,13 +72,45 @@ public class ServletGerenciarDisciplinas extends HttpServlet {
                 out.println("<script>");
                 out.println("alert('Disciplina adicionada com sucesso');");
                 out.println("history.back();");
-                out.println("window.location.reload();"); // Adiciona o refresh da página após a alteração
                 out.println("</script>");
             }
 
         } catch (Exception e) {
             // Envia uma mensagem de erro
             enviarMensagem(response, "Erro ao adicionar disciplina: " + e.getMessage());
+        }
+    }
+
+    private void excluirNotaDisciplina(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            // Obtém os parâmetros do formulário
+            int idDisciplina = Integer.parseInt(request.getParameter("id"));
+
+            HttpSession session = request.getSession();
+            // Recupera o atributo da sessão
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+            if (usuario == null) {
+                response.sendRedirect("index.html");
+            } else {
+                // O usuário está na sessão, podemos prosseguir com a exclusão da nota da disciplina
+                CadastroDisciplinaDAO dao = new CadastroDisciplinaDAO();
+                dao.excluirNota(usuario.getId(), idDisciplina);
+
+                // Envia uma mensagem de sucesso como parte da resposta da servlet
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>");
+                out.println("alert('Nota da disciplina excluída com sucesso');");
+                out.println("window.location.href = 'html/sessoes/usuario/sessoesUsuarioDisciplina.jsp';"); // Redireciona para a mesma página
+                out.println("</script>");
+            }
+        } catch (NumberFormatException e) {
+            // Se ocorrer um erro ao converter os parâmetros para números
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parâmetros inválidos.");
+        } catch (Exception e) {
+            // Se ocorrer outro erro durante a exclusão da nota da disciplina
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao excluir nota da disciplina: " + e.getMessage());
         }
     }
 
@@ -141,6 +179,41 @@ public class ServletGerenciarDisciplinas extends HttpServlet {
         }
     }
 
+    private void editarNotaDisciplina(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            // Obtém os parâmetros do formulário
+            int idDisciplina = Integer.parseInt(request.getParameter("id"));
+            float novaNota = Float.parseFloat(request.getParameter("novaNota"));
+
+            HttpSession session = request.getSession();
+            // Recupera o atributo da sessão
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+            if (usuario == null) {
+                response.sendRedirect("index.html");
+            } else {
+                // O usuário está na sessão, podemos prosseguir com a edição da nota da disciplina
+                CadastroDisciplinaDAO dao = new CadastroDisciplinaDAO();
+                dao.alterarNota(usuario.getId(), idDisciplina, novaNota);
+
+                // Envia uma mensagem de sucesso como parte da resposta da servlet
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>");
+                out.println("alert('Disciplina excluída com sucesso');");
+                out.println("history.back();");
+                out.println("window.location.reload();"); // Adiciona o refresh da página após a alteração
+                out.println("</script>");
+            }
+        } catch (NumberFormatException e) {
+            // Se ocorrer um erro ao converter os parâmetros para números
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parâmetros inválidos.");
+        } catch (Exception e) {
+            // Se ocorrer outro erro durante a edição da nota da disciplina
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao editar nota da disciplina: " + e.getMessage());
+        }
+    }
+
     private void enviarMensagem(HttpServletResponse response, String mensagem) throws IOException {
         response.setContentType("text/plain");
         try (PrintWriter out = response.getWriter()) {
@@ -151,7 +224,8 @@ public class ServletGerenciarDisciplinas extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws
+            ServletException, IOException {
         processRequest(request, response);
     }
 

@@ -66,10 +66,17 @@ function mostrarVerDisciplinas() {
 
 
 
-    // Função para abrir o modal de edição de nota
-    function abrirModalEditarNota(disciplinaId) {
-        // Define o valor do campo oculto com o ID da disciplina
-        document.getElementById('editar-nota-disciplina-id').value = disciplinaId;
-        // Abre o modal
-        $('#editarNotaModal').modal('show');
-    }
+// Função para abrir o modal de edição de nota
+function abrirModalEditarNota(disciplinaId) {
+    // Define o valor do campo oculto com o ID da disciplina
+    document.getElementById('editar-nota-disciplina-id').value = disciplinaId;
+    // Abre o modal
+    $('#editarNotaModal').modal('show');
+}
+
+function abrirModalDeletarNota(disciplinaId) {
+    // Defina o ID da disciplina no input hidden dentro do formulário do modal
+    document.getElementById("deletar-nota-disciplina-id").value = disciplinaId;
+    // Abra o modal
+    $('#deletarNotaModal').modal('show');
+}

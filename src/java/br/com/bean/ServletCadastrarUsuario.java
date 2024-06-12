@@ -20,6 +20,10 @@ public class ServletCadastrarUsuario extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html;charset=UTF-8");
+            
             String nome = request.getParameter("name");
             String email = request.getParameter("email");
             String senha = request.getParameter("password");

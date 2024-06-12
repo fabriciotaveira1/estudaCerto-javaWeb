@@ -30,12 +30,13 @@
                             <button class="btn" type="button" id="btnPage"><img src="../assets/background/icon1.svg" alt=""></button>
                             <li class="nav-item disabled"><a href="${pageContext.request.contextPath}/index.html" class="nav-link text-light">Pagina
                                     Inicial</a></li>
-                            <li class="nav-item disabled"><a href="sessaoUsuarioDisciplina.jsp"
+                            <li class="nav-item disabled"><a href="${pageContext.request.contextPath}/ServletListarDisciplina"
                                                              class="nav-link text-light ">Alterar Disciplina</a></li>
-                            <li class="nav-item disabled"><a href="cronometro.jsp" class="nav-link text-light ">Cronometro de Estudos</a>
+                            <li class="nav-item disabled"><a href="${pageContext.request.contextPath}/ServletCronometroPage" class="nav-link text-light ">Cronometro de Estudos</a>
                             </li>
-                            <li class="nav-item disabled"><a href="material.jsp"
-                                                             class="nav-link text-light ">Material</a></li>
+                            <li class="nav-item disabled"><a href="${pageContext.request.contextPath}/ServletListarMaterial"
+                                                             class="nav-link text-light ">Material de Aprendizagem</a></li>
+                            <li class="nav-item"><a href="${pageContext.request.contextPath}/ServletRelatorios" class="nav-link text-light active">Relatórios e Estatísticas</a></li>
                         </ul>
                         <ul class="navbar-nav mb-2 mb-lg-0 disabled">
                             <li class="nav-item"><a href="${pageContext.request.contextPath}/html/sessoes/usuario/profile.jsp" class="nav-link text-light">Meu Perfil</a></li>
@@ -46,15 +47,15 @@
             </header>
 
             <%
-            // Recupere o objeto usuario da sessão
-            Usuario usuario = (Usuario) session.getAttribute("usuario");
-            if (usuario == null) {
-                // Redireciona para a página de índice se o usuário não estiver na sessão
-                response.sendRedirect(request.getContextPath() + "/index.html");
-                return;
-            }
-        
-            CadastroMaterialDAO cadastroDao = new CadastroMaterialDAO(); 
+                // Recupere o objeto usuario da sessão
+                Usuario usuario = (Usuario) session.getAttribute("usuario");
+                if (usuario == null) {
+                    // Redireciona para a página de índice se o usuário não estiver na sessão
+                    response.sendRedirect(request.getContextPath() + "/index.html");
+                    return;
+                }
+
+                CadastroMaterialDAO cadastroDao = new CadastroMaterialDAO();
             %>
 
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -68,7 +69,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#" onclick="mostrarAdicionarMaterial()">Adicionar Material</a>
                             </li>
-                        
+
                             <li class="nav-item">
                                 <a class="nav-link" href="#" onclick="mostrarExcluirMaterial()">Excluir Material</a>
                             </li>
@@ -90,7 +91,7 @@
                         <input type="hidden" name="action" value="adicionar">
                         <div class="mb-3">
                             <label for="usuario_id" class="form-label"></label>
-                            <span type="number" id="usuario_id" name="usuario_id" style="display:none;"><%= usuario.getId() %></span>
+                            <span type="number" id="usuario_id" name="usuario_id" style="display:none;"><%= usuario.getId()%></span>
                         </div>
                         <div class="mb-3">
                             <label for="titulo" class="form-label">Título</label>
@@ -104,7 +105,7 @@
                     </form>
                 </div>
 
-             
+
 
                 <div class="container mt-4" id="excluirMaterial" style="display: none;">
                     <h2>Excluir Material de Aprendizagem</h2>
@@ -120,6 +121,10 @@
 
                 <div class="container mt-4" id="verMateriais">
                     <h2>Materiais de Aprendizagem</h2>
+                    <div class="d-flex justify-content-center">
+                        <button onclick="window.location.reload();" type="submit" class="btn btn-primary">Atualizar Materiaís</button>
+                    </div>
+                    <br>
                     <!-- Aqui você adicionará o conteúdo dinâmico para exibir os materiais -->
                     <div id="materiaisConteudo">
                         <table class="table">
@@ -223,12 +228,12 @@
         <script src="${pageContext.request.contextPath}/js/index.js"></script>
         <script src="${pageContext.request.contextPath}/js/usuario/material.js"></script>
         <script>
-                                // Função para abrir o modal de exclusão com o ID correto
-                                function abrirModalExcluir(id) {
-                                    document.getElementById('idExcluir').value = id;
-                                    var modalExcluir = new bootstrap.Modal(document.getElementById('modalExcluirMaterial'));
-                                    modalExcluir.show();
-                                }
+                                                // Função para abrir o modal de exclusão com o ID correto
+                                                function abrirModalExcluir(id) {
+                                                    document.getElementById('idExcluir').value = id;
+                                                    var modalExcluir = new bootstrap.Modal(document.getElementById('modalExcluirMaterial'));
+                                                    modalExcluir.show();
+                                                }
         </script>
     </body>
 

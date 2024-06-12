@@ -1,6 +1,6 @@
 <%@ page import="br.com.model.Usuario" %>
 <%@ page import="br.com.bean.ServletLogin" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page session="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -24,10 +24,11 @@
                             Inicial</a></li>
                     <li class="nav-item disabled"><a href="sessaoUsuarioDisciplina.jsp"
                                                      class="nav-link text-light ">Alterar Disciplina</a></li>
-                    <li class="nav-item disabled"><a href="cronometro.jsp" class="nav-link text-light ">Cronometro de Estudos</a>
+                    <li class="nav-item disabled"><a href="${pageContext.request.contextPath}/ServletCronometroPage" class="nav-link text-light ">Cronometro de Estudos</a>
                     </li>
-                    <li class="nav-item disabled"><a href="comunity.html"
-                                                     class="nav-link text-light ">Comunidade</a></li>
+                    <li class="nav-item disabled"><a href="${pageContext.request.contextPath}/ServletListarMaterial"
+                                                     class="nav-link text-light ">Material de Aprendizagem</a></li>
+                    <li class="nav-item"><a href="${pageContext.request.contextPath}/ServletRelatorios" class="nav-link text-light active">Relatórios e Estatísticas</a></li>
                 </ul>
                 <ul class="navbar-nav mb-2 mb-lg-0 disabled">
                     <li class="nav-item"><a href="${pageContext.request.contextPath}/html/sessoes/usuario/profile.jsp" class="nav-link text-light">Meu Perfil</a></li>

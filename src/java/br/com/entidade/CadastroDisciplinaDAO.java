@@ -24,11 +24,26 @@ public class CadastroDisciplinaDAO extends DAO {
         }
     }
 
+    public void alterarNota(int idUsuario, int idDisciplina, float novaNota) throws Exception {
+        try {
+            abrirBanco();
+            String query = "UPDATE Disciplina SET nota = ? WHERE usuario_id = ? AND id = ?";
+            pst = con.prepareStatement(query);
+            pst.setFloat(1, novaNota);
+            pst.setInt(2, idUsuario);
+            pst.setInt(3, idDisciplina);
+            pst.executeUpdate();
+            fecharBanco();
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar nota da disciplina: " + e.getMessage());
+        }
+    }
+
     public ArrayList<Disciplina> pesquisarTudo() throws Exception {
         ArrayList<Disciplina> listaDisciplinas = new ArrayList<>();
         try {
             abrirBanco();
-            String query = "SELECT id, nome, carga_horaria, professor_responsavel, descricao FROM Disciplina";
+            String query = "SELECT id, nome, carga_horaria, professor_responsavel, descricao, nota FROM Disciplina";
             pst = con.prepareStatement(query);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
@@ -38,6 +53,7 @@ public class CadastroDisciplinaDAO extends DAO {
                 disciplina.setCargaHoraria(rs.getInt("carga_horaria"));
                 disciplina.setProfessor(rs.getString("professor_responsavel"));
                 disciplina.setDescricao(rs.getString("descricao"));
+                disciplina.setNota(rs.getFloat("nota"));
                 listaDisciplinas.add(disciplina);
             }
             fecharBanco();
@@ -45,6 +61,20 @@ public class CadastroDisciplinaDAO extends DAO {
             System.out.println("Erro ao pesquisar todas as disciplinas: " + e.getMessage());
         }
         return listaDisciplinas;
+    }
+
+    public void excluirNota(int usuarioId, int disciplinaId) throws Exception {
+        try {
+            abrirBanco();
+            String query = "DELETE FROM Nota WHERE usuario_id = ? AND disciplina_id = ?";
+            pst = con.prepareStatement(query);
+            pst.setInt(1, usuarioId);
+            pst.setInt(2, disciplinaId);
+            pst.executeUpdate();
+            fecharBanco();
+        } catch (Exception e) {
+            System.out.println("Erro ao excluir nota da disciplina: " + e.getMessage());
+        }
     }
 
     public boolean deletar(Disciplina disciplina) throws Exception {
@@ -103,5 +133,4 @@ public class CadastroDisciplinaDAO extends DAO {
         return null;
     }
 
-    
 }

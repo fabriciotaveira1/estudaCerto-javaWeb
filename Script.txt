@@ -22,15 +22,6 @@ CREATE TABLE CronometroDeEstudos (
     FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
 );
 
--- Tabela de Calendário
-CREATE TABLE Calendario (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT,
-    evento VARCHAR(100) NOT NULL,
-    data_hora DATETIME NOT NULL,
-    lembrete ENUM('email', 'notificacao') NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
-);
 
 -- Tabela de Materiais de Aprendizagem
 CREATE TABLE MateriaisDeAprendizagem (
@@ -53,48 +44,3 @@ CREATE TABLE Disciplina (
     nota FLOAT, -- Adicionando a coluna de nota na tabela Disciplina
     FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
 );
-
--- Tabela de Notas e Registros de Disciplinas
-CREATE TABLE Nota (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    disciplina_id INT,
-    usuario_id INT,
-    nota FLOAT,
-    UNIQUE KEY unique_nota_disciplina_usuario (disciplina_id, usuario_id), -- Restrição de chave única
-    FOREIGN KEY (disciplina_id) REFERENCES Disciplina(id),
-    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
-);
-
-DELIMITER //
-
-CREATE TRIGGER atualizar_nota_disciplina
-AFTER INSERT ON Nota
-FOR EACH ROW
-BEGIN
-    UPDATE Disciplina
-    SET nota = NEW.nota
-    WHERE id = NEW.disciplina_id;
-END;
-//
-
-CREATE TRIGGER atualizar_nota_disciplina_after_update
-AFTER UPDATE ON Nota
-FOR EACH ROW
-BEGIN
-    UPDATE Disciplina
-    SET nota = NEW.nota
-    WHERE id = NEW.disciplina_id;
-END;
-//
-
-CREATE TRIGGER atualizar_nota_disciplina_after_delete
-AFTER DELETE ON Nota
-FOR EACH ROW
-BEGIN
-    UPDATE Disciplina
-    SET nota = NULL
-    WHERE id = OLD.disciplina_id;
-END;
-//
-
-DELIMITER ;

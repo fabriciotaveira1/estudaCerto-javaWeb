@@ -16,7 +16,6 @@ nav ul li:hover{
 /* <!-- ---------- MAIN ---------- --> */
 main{
     background-color: rgba(128, 128, 128, 0.233);
-    max-height:1200px;
 }
 #banner1 {
     width: 100%;

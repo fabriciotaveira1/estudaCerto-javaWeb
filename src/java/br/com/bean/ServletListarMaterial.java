@@ -6,6 +6,7 @@ package br.com.bean;
 
 import br.com.entidade.CadastroMaterialDAO;
 import br.com.model.Material;
+import br.com.model.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,11 +14,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 /**
  *
- * @author victo
+ * @author Marina
  */
 @WebServlet(name = "ServletListarMaterial", urlPatterns = {"/ServletListarMaterial"})
 public class ServletListarMaterial extends HttpServlet {
@@ -35,9 +37,16 @@ public class ServletListarMaterial extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+
+            request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html;charset=UTF-8");
+
             try {
+                HttpSession session = request.getSession();
+                Usuario usuario = (Usuario) session.getAttribute("usuario");
                 // Aqui você deve obter o id do usuário logado, supondo que esteja disponível na sessão
-                int usuarioId = 1; // Substitua 1 pelo id do usuário logado
+                int usuarioId = (usuario.getId()); // Substitua 1 pelo id do usuário logado
 
                 // Instanciando o DAO para acessar o banco de dados
                 CadastroMaterialDAO dao = new CadastroMaterialDAO();

@@ -16,8 +16,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-        <link rel="stylesheet" href="../css/index.css">
-        <link rel="stylesheet" href="../css/mediaQueries/smarthpone.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mediaQueries/smarthpone.css">
     </head>
 
     <body>
@@ -31,8 +31,8 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="ulRight">
                             <li class="nav-item disabled"><a href="../index.html" class="nav-link text-light">Pagina
                                     Inicial</a></li>
-                            <li class="nav-item disabled"><a href="challengers.html"
-                                                             class="nav-link text-light ">Desafios</a></li>
+                            <li class="nav-item disabled"><a href="tecs.html"
+                                                             class="nav-link text-light ">Técnicas de Estudo</a></li>
 
                         </ul>
                         <ul class="navbar-nav mb-2 mb-lg-0 disabled">
@@ -44,6 +44,7 @@
             <!-- ---------- HEADER ---------- -->
 
             <!-- ---------- MAIN ---------- -->
+
             <main class="my-2">
                 <div class="container-fluid my-2 text-primary">
                     <h1 class="text-uppercase text-center text-black fontNature" id="mainH1">Entrar/Cadastrar</h1>
@@ -65,6 +66,7 @@
                                         </button>
                                     </div>
                                 </form>
+                                <p>${mensagemErro}</p>
                             </div>
                         </div>
 
@@ -157,9 +159,10 @@
             </footer>
 
             <!-- JavaScript Bundle with Popper -->
-            <script src="../../../js/code.jquery.com_jquery-3.7.1.js"></script>
+            <script src="${pageContext.request.contextPath}/js/code.jquery.com_jquery-3.7.1.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
                     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
             crossorigin="anonymous"></script>
-            <script src="../../../js/index.js"></script>
+            <script src="${pageContext.request.contextPath}/js/index.js"></script>
+
     </body>

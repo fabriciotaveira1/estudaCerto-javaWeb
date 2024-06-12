@@ -1,22 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.model;
 
-/**
- *
- * @author Marina
- */
 import java.sql.Time;
 import java.util.Date;
 
 public class CronometroDeEstudos {
+
     private int id;
     private int usuarioId;
     private String atividade;
     private Time tempoGasto;
-    private Date data;
+    private java.sql.Date data;
 
     // Getters e Setters
     public int getId() {
@@ -51,11 +44,11 @@ public class CronometroDeEstudos {
         this.tempoGasto = tempoGasto;
     }
 
-    public Date getData() {
+    public java.sql.Date getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(java.sql.Date data) {
         this.data = data;
     }
 }
