@@ -1,0 +1,197 @@
+/* <!-- ---------- PAGE ---------- --> */
+#page {
+    cursor: url(../assets/cursor/contornadoazul.cur), pointer;
+    font-family: 'Lato', sans-serif;
+}
+
+/* <!-- ---------- PAGE ---------- --> */
+nav ul li:hover{
+    font-size: 20px;
+    transition: 1s;
+}
+/* <!-- ---------- HEADER ---------- --> */
+
+/* <!-- ---------- HEADER ---------- --> */
+
+/* <!-- ---------- MAIN ---------- --> */
+main{
+    background-color: rgba(128, 128, 128, 0.233);
+    max-height:1200px;
+}
+#banner1 {
+    width: 100%;
+    height: 600px;
+    background-image: url(../assets/background/banner1.jpg);
+    background-position: center;
+    background-size: cover;
+}
+#mainContainer1{
+    background-color: rgba(128, 128, 128, 0.182);
+    font-size: 20px;
+}
+
+#mainContainer1 p:hover{
+    background-color: #d1e7dd;
+}
+#mainH1{
+    font-size: 200%;
+}
+
+#mainH1:hover{
+    background-color: bisque;
+    font-size: 30px;
+}
+
+
+/* <!-- ---------- MAIN ---------- --> */
+
+/* <!-- ---------- FOOTER ---------- --> */
+footer h4{
+    font-family: Nature;
+}
+
+footer h4:hover{
+    font-size: 20px;
+    transition: 1s;
+}
+/* <!-- ---------- FOOTER ---------- --> */
+
+/* ----------- ADDINGS --------- */
+.fontNature {
+    font-family: Nature, Arial, Helvetica, sans-serif;
+}
+
+@font-face {
+    font-family: Nature;
+    src: url(../assets/font/the_naturel_txt/The\ Naturel\ Txt2.ttf);
+}
+
+
+
+/* ----------- ADDINGS --------- */
+
+/* --------------------------------- CHALLENGER PAGE------------------------------------- */
+#challenger h5{
+    font-family: Nature;;
+}
+
+#row1:hover,#row2:hover,#row3:hover,#row4:hover{
+    background-color: #58c594;
+}
+
+/* --------------------------------- CHALLENGER ------------------------------------- */
+
+/* --------------------------------- RESOURCES ------------------------------------- */
+
+
+.article{
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.article img{
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+article h3{
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+article p{
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+/* --------------------------------- RESOURCES ------------------------------------- */
+
+/* --------------------------------- MEMBERS ------------------------------------- */
+
+#members{
+    padding: 40px;
+}
+
+.member{
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.member img{
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.member h3{
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.member p{
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+
+/* --------------------------------- MEMBERS ------------------------------------- */
+
+/* --------------------------------- ENTER/SIGNIN ------------------------------------- */
+
+#sigIn{
+    padding: 40px;
+}
+
+.signIn{
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.signIn h3{
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+
+
+/* --------------------------------- ENTER/SIGNIN ------------------------------------- */
+
+/* --------------------------------- PROFILE ------------------------------------- */
+#profile {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+.perfil{
+    width: 60%;
+    height: auto;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.perfil-header img {
+    max-width: 100%;
+    max-height: 500px;
+    border-radius: 10%;
+    margin-bottom: 10px;
+}
+
+.perfil-header h2 {
+    text-align: center;
+}
+
+.perfil-info h3 {
+    margin-top: 20px;
+}
+
+/* --------------------------------- PROFILE ------------------------------------- */

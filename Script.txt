@@ -1,0 +1,100 @@
+CREATE DATABASE estudacerto;
+USE estudacerto;
+
+-- Tabela de Usuários
+CREATE TABLE Usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    tipo_usuario ENUM('estudante', 'professor', 'administrador') NOT NULL,
+    tentativas_login_incorretas INT DEFAULT 0,
+    conta_suspensa BOOLEAN DEFAULT FALSE
+);
+
+-- Tabela de Cronômetro de Estudos
+CREATE TABLE CronometroDeEstudos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    atividade VARCHAR(100) NOT NULL,
+    tempo_gasto TIME NOT NULL,
+    data DATE NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+);
+
+-- Tabela de Calendário
+CREATE TABLE Calendario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    evento VARCHAR(100) NOT NULL,
+    data_hora DATETIME NOT NULL,
+    lembrete ENUM('email', 'notificacao') NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+);
+
+-- Tabela de Materiais de Aprendizagem
+CREATE TABLE MateriaisDeAprendizagem (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    titulo VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    data_adicao DATE NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+);
+
+-- Tabela de Disciplinas
+CREATE TABLE Disciplina (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    nome VARCHAR(100) NOT NULL,
+    carga_horaria INT NOT NULL,
+    professor_responsavel VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    nota FLOAT, -- Adicionando a coluna de nota na tabela Disciplina
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+);
+
+-- Tabela de Notas e Registros de Disciplinas
+CREATE TABLE Nota (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    disciplina_id INT,
+    usuario_id INT,
+    nota FLOAT,
+    UNIQUE KEY unique_nota_disciplina_usuario (disciplina_id, usuario_id), -- Restrição de chave única
+    FOREIGN KEY (disciplina_id) REFERENCES Disciplina(id),
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+);
+
+DELIMITER //
+
+CREATE TRIGGER atualizar_nota_disciplina
+AFTER INSERT ON Nota
+FOR EACH ROW
+BEGIN
+    UPDATE Disciplina
+    SET nota = NEW.nota
+    WHERE id = NEW.disciplina_id;
+END;
+//
+
+CREATE TRIGGER atualizar_nota_disciplina_after_update
+AFTER UPDATE ON Nota
+FOR EACH ROW
+BEGIN
+    UPDATE Disciplina
+    SET nota = NEW.nota
+    WHERE id = NEW.disciplina_id;
+END;
+//
+
+CREATE TRIGGER atualizar_nota_disciplina_after_delete
+AFTER DELETE ON Nota
+FOR EACH ROW
+BEGIN
+    UPDATE Disciplina
+    SET nota = NULL
+    WHERE id = OLD.disciplina_id;
+END;
+//
+
+DELIMITER ;
